@@ -11,7 +11,6 @@ module.exports = {
             resolution=(req.query.resolution/60)+"H";
         else
             resolution=(req.query.resolution/1440)+"D";
-        const resolution=req.query.resolution/60;
         params.table=req.query.fsym+req.query.tsym+"_"+resolution;
         params.range=(new Date(req.query.from)).getFullYear();
         console.log(params);
