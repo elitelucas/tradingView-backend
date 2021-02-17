@@ -1,0 +1,14 @@
+{
+  "name": "node-oraclev2",
+  "version": "1.0.0",
+  "main": "./src/Server.js",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^1.18.11"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "oracledb": "^5.1.0",
+    "require-dir": "^1.2.0"
+  }
+}
