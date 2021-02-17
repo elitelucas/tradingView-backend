@@ -14,6 +14,9 @@ module.exports = {
         else
             resolution=(req.query.resolution/1440)+"D";
         params.table=fsym+tsym+"_"+resolution;
+        console.log(req.query.from);
+        console.log(new Date(req.query.from));
+        console.log((new Date(req.query.from)).getFullYear());
         params.range=req.query.from ? (new Date(req.query.from)).getFullYear() : 2021;
         console.log(params);
         const result = await d.query(`
