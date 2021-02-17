@@ -6,7 +6,7 @@ class Database {
         this.user = process.env.NODE_ORACLEDB_USER,
         this.password = process.env.NODE_ORACLEDB_PASSWORD,
         this.connectString = `(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = ${process.env.NODE_ORACLEDB_HOSTNAME})(PORT = ${process.env.NODE_ORACLEDB_PORT}))(CONNECT_DATA =(SID= ${process.env.NODE_ORACLEDB_SID})))`
-        this.externalAuth = false
+        this.externalAuth = true
     }
 
     getConnection() {
