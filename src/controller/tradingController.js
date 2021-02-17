@@ -4,15 +4,17 @@ module.exports = {
     async getData(req, res) {
         const d = await new Database();      
         const params={}; 
-        let resolution; 
+        let fsym=req.query.fsym ? req.query.fsym : "GBP";
+        let tsym=req.query.tsym ? req.query.tsym : "USD";
+        let resolution=1; 
         if(req.query.resolution<60)
             resolution=req.query.resolution+"M";
         else if(req.query.resolution<1440)
             resolution=(req.query.resolution/60)+"H";
         else
             resolution=(req.query.resolution/1440)+"D";
-        params.table=req.query.fsym+req.query.tsym+"_"+resolution;
-        params.range=(new Date(req.query.from)).getFullYear();
+        params.table=fsym+tsym+"_"+resolution;
+        params.range=req.query.from ? (new Date(req.query.from)).getFullYear() : 2021;
         console.log(params);
         const result = await d.query(`
         SELECT  * from :table
