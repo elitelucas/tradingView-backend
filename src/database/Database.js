@@ -6,7 +6,7 @@ class Database {
         this.user = "admin",
         this.password = "iMPj1YEdB9OZCDXCjoNW",
         this.connectString = `(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = optitrade.cwddl2yxow6x.us-east-2.rds.amazonaws.com)(PORT = 1521))(CONNECT_DATA =(SID= OPTI)))`
-        this.externalAuth = true
+        this.externalAuth = false
     }
 
     getConnection() {
