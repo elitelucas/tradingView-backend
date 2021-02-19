@@ -10,7 +10,8 @@ class Database {
     }
 
     getConnection() {
-        console.log(this.connectString)
+        console.log(process.env.NODE_ORACLEDB_USER);
+        console.log(this.connectString);
         return oracledb.getConnection({            
                 user: this.user,
                 password: this.password,
