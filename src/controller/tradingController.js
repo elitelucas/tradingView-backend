@@ -23,9 +23,9 @@ module.exports = {
         // params.range=req.query.from ? (new Date(req.query.from*1000)).getFullYear() : 2021;
         console.log(params);
         const result = await d.query(`
-        SELECT  * from "ADMIN".":table"        
+        SELECT  * from "ADMIN"."GBPUSD_1M"        
         `        
-        , params);
+        );
         res.send(result);        
     }    
 }
