@@ -22,16 +22,16 @@ module.exports = {
         console.log((new Date(req.query.from*1000)).getFullYear());
         params.range=req.query.from ? (new Date(req.query.from*1000)).getFullYear() : 2021;
         console.log(params);
-        // const result = await d.query(`
-        // SELECT  * from "ADMIN".":table"
-        // WHERE TRUNC(DATETIME)>=TO_DATE('01/JAN/:range','dd/mon/yyyy')
-        // `        
-        // , params);
         const result = await d.query(`
-        SELECT  * from "ADMIN"."GBPUSD_1M"
-        WHERE TRUNC(DATETIME)>=TO_DATE('01/JAN/2021','dd/mon/yyyy')
+        SELECT  * from "ADMIN".":table"
+        WHERE TRUNC(DATETIME)>=TO_DATE('01/JAN/:range','dd/mon/yyyy')
         `        
-        );
+        , [params.table, params.range]);
+        // const result = await d.query(`
+        // SELECT  * from "ADMIN"."GBPUSD_1M"
+        // WHERE TRUNC(DATETIME)>=TO_DATE('01/JAN/2021','dd/mon/yyyy')
+        // `        
+        // );
         res.send(result);        
     }    
 }
