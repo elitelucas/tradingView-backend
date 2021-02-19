@@ -22,7 +22,7 @@ module.exports = {
         console.log(table);
         let range=req.query.from ? (new Date(req.query.from*1000)).getFullYear() : 2021;
         const tmp_result = await d.query(`
-        SELECT  id, datetime, open, close, low, high, volumen from "ADMIN"."${table}"
+        SELECT  * from "ADMIN"."${table}"
         WHERE TRUNC(DATETIME)>=TO_DATE('01/JAN/' || :range,'dd/mon/yyyy');
         `        
         , {range:range});
