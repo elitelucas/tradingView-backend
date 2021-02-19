@@ -26,7 +26,7 @@ module.exports = {
         SELECT  * from "ADMIN"."GBPUSD_1M"
         WHERE TRUNC(DATETIME)>=TO_DATE('01/JAN/'.:range,'dd/mon/yyyy')
         `        
-        , {"range":string(params.range)});
+        , {"range":params.range});
         // const result = await d.query(`
         // SELECT  * from "ADMIN"."GBPUSD_1M"
         // WHERE TRUNC(DATETIME)>=TO_DATE('01/JAN/2021','dd/mon/yyyy')
