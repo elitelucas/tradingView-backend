@@ -24,7 +24,7 @@ module.exports = {
         console.log(params);
         const result = await d.query(`
         SELECT  * from "ADMIN"."GBPUSD_1M"
-        WHERE TRUNC(DATETIME)>=TO_DATE('01/JAN/:range','dd/mon/yyyy')
+        WHERE TRUNC(DATETIME)>=TO_DATE('01/JAN/'.:range,'dd/mon/yyyy')
         `        
         , {"range":string(params.range)});
         // const result = await d.query(`
