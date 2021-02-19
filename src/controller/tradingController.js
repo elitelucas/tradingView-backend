@@ -24,6 +24,7 @@ module.exports = {
         const tmp_result = await d.query(`
         SELECT  id, datetime, open, close, low, high, volumen from "ADMIN"."${table}"
         WHERE TRUNC(DATETIME)>=TO_DATE('01/JAN/' || :range,'dd/mon/yyyy')
+        ORDER BY DATETIME
         `        
         , {range:range});
         // const result = await d.query(`
