@@ -12,7 +12,7 @@ module.exports = {
             resolution=req.query.resolution+"M";
         else if(req.query.resolution<1440)
             resolution=(req.query.resolution/60)+"H";
-        else
+        else if(req.query.resolution<1440)
             resolution=(req.query.resolution/1440)+"D";
         params.table=fsym+tsym+"_"+resolution;
         console.log(req.query.from);
