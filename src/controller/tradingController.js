@@ -21,9 +21,9 @@ module.exports = {
         console.log((new Date(req.query.from*1000)).getFullYear());
         console.log(table);
         let range=req.query.from ? (new Date(req.query.from*1000)).getFullYear() : 2021;
-        const result = await d.query(`
-        SELECT  * from "ADMIN"."${table}"
-        WHERE TRUNC(DATETIME)>=TO_DATE('01/JAN/' || :range,'dd/mon/yyyy')
+        const tmp_result = await d.query(`
+        SELECT  ID, DATETIME, OPEN, CLOSE, LOW, HIGH, VOLUMEN from "ADMIN"."${table}" ORDER BY DATETIME
+        WHERE TRUNC(DATETIME)>=TO_DATE('01/JAN/' || :range,'dd/mon/yyyy') 
         `        
         , {range:range});
         // const result = await d.query(`
@@ -31,6 +31,32 @@ module.exports = {
         // WHERE TRUNC(DATETIME)>=TO_DATE('01/JAN/2021','dd/mon/yyyy')
         // `        
         // );
+        
+        const result={};
+        result.Data=tmp_result.rows.map(ele=>{
+            return {
+                time:ele[1],
+                close:ele[3],
+                conversionSymbol:"",
+                conversionType:"force_direct",
+                hige:ele[5],
+                low:ele[4],
+                open:ele[2],
+                volumefrom:0,
+                volumeto:ele[6]
+            }
+        });
+        result.Aggregated=false;
+        result.ConversionType={
+            type:"force_direct",
+            conversionSymbol:""
+        };
+        result.FirstValueInArray=true;
+        result.HasWarning=false;
+        result.Response="Success";
+        result.Type=tmp_result.rows.length;
+        result.TimeFrom=tmp_result.rows[0][1];
+        result.TimeTo=tmp_result.rows[result.Type-1][1];
         res.send(result);        
     }    
 }
