@@ -11,7 +11,7 @@ module.exports = {
             resolution=req.query.resolution+"M";
         else if(req.query.resolution<1440)
             resolution=(req.query.resolution/60)+"H";
-        else if(req.query.resolution<1440)
+        else if(req.query.resolution>=1440)
             resolution=(req.query.resolution/1440)+"D";
         else
             resolution=resolution+"M";
@@ -19,6 +19,7 @@ module.exports = {
         console.log(req.query.from);
         console.log(new Date(req.query.from*1000));
         console.log((new Date(req.query.from*1000)).getFullYear());
+        console.log(table);
         let range=req.query.from ? (new Date(req.query.from*1000)).getFullYear() : 2021;
         const result = await d.query(`
         SELECT  * from "ADMIN"."${table}"
