@@ -36,11 +36,11 @@ module.exports = {
         const result={};
         result.Data=tmp_result.rows.map(ele=>{
             return {
-                time:(new Date(ele[1])).getTime(),
+                time:(new Date(ele[1])).getTime()/1000,
                 close:ele[3],
                 conversionSymbol:"",
                 conversionType:"force_direct",
-                hige:ele[5],
+                high:ele[5],
                 low:ele[4],
                 open:ele[2],
                 volumefrom:0,
@@ -57,7 +57,7 @@ module.exports = {
         result.Response="Success";
         result.Type=tmp_result.rows.length;
         result.TimeFrom=result.Data[0].time;
-        result.TimeTo=result.Data[result.Type-1][1];
+        result.TimeTo=result.Data[result.Type-1].time;
         res.send(result);        
     }    
 }
