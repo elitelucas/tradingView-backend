@@ -4,7 +4,6 @@ module.exports = {
     async getData(req, res) {
         console.log("controller");
         const d = await new Database();      
-        const params={}; 
         let fsym=req.query.fsym ? req.query.fsym : "GBP";
         let tsym=req.query.tsym ? req.query.tsym : "USD";
         let resolution=1; 
@@ -16,17 +15,16 @@ module.exports = {
             resolution=(req.query.resolution/1440)+"D";
         else
             resolution=resolution+"M";
-        params.table=fsym+tsym+"_"+resolution;
+        const table=fsym+tsym+"_"+resolution;
         console.log(req.query.from);
         console.log(new Date(req.query.from*1000));
         console.log((new Date(req.query.from*1000)).getFullYear());
-        params.range=req.query.from ? (new Date(req.query.from*1000)).getFullYear() : 2021;
-        console.log(params);
+        let range=req.query.from ? (new Date(req.query.from*1000)).getFullYear() : 2021;
         const result = await d.query(`
-        SELECT  * from "ADMIN"."${params.table}"
+        SELECT  * from "ADMIN"."${table}"
         WHERE TRUNC(DATETIME)>=TO_DATE('01/JAN/' || :range,'dd/mon/yyyy')
         `        
-        , {params});
+        , {range:range});
         // const result = await d.query(`
         // SELECT  * from "ADMIN"."GBPUSD_1M"
         // WHERE TRUNC(DATETIME)>=TO_DATE('01/JAN/2021','dd/mon/yyyy')
