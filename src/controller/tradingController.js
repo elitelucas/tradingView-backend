@@ -36,7 +36,7 @@ module.exports = {
         const result={};
         result.Data=tmp_result.rows.map(ele=>{
             return {
-                time:ele[1],
+                time:(new Date(ele[1])).getTime(),
                 close:ele[3],
                 conversionSymbol:"",
                 conversionType:"force_direct",
@@ -56,8 +56,8 @@ module.exports = {
         result.HasWarning=false;
         result.Response="Success";
         result.Type=tmp_result.rows.length;
-        result.TimeFrom=tmp_result.rows[0][1];
-        result.TimeTo=tmp_result.rows[result.Type-1][1];
+        result.TimeFrom=result.Data[0].time;
+        result.TimeTo=result.Data[result.Type-1][1];
         res.send(result);        
     }    
 }
