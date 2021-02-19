@@ -3,15 +3,15 @@ const oracledb = require('oracledb');
 class Database {    
 
     constructor() {
-        this.user = process.env.NODE_ORACLEDB_USER,
-        this.password = process.env.NODE_ORACLEDB_PASSWORD,
-        this.connectString = `(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = ${process.env.NODE_ORACLEDB_HOSTNAME})(PORT = ${process.env.NODE_ORACLEDB_PORT}))(CONNECT_DATA =(SID= ${process.env.NODE_ORACLEDB_SID})))`
+        this.user = "admin",
+        this.password = "iMPj1YEdB9OZCDXCjoNW",
+        this.connectString = `(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = optitrade.cwddl2yxow6x.us-east-2.rds.amazonaws.com)(PORT = 1521))(CONNECT_DATA =(SID= OPTI)))`
         this.externalAuth = true
     }
 
     getConnection() {
-        console.log(process.env.NODE_ORACLEDB_USER);
-        console.log(this.connectString);
+        // console.log(process.env.NODE_ORACLEDB_USER);
+        // console.log(this.connectString);
         return oracledb.getConnection({            
                 user: this.user,
                 password: this.password,
