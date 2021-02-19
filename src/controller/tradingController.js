@@ -2,6 +2,7 @@ const Database = require('../database/Database.js');
 
 module.exports = { 
     async getData(req, res) {
+        console.log("controller");
         const d = await new Database();      
         const params={}; 
         let fsym=req.query.fsym ? req.query.fsym : "GBP";
