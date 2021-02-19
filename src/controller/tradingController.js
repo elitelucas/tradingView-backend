@@ -43,7 +43,7 @@ module.exports = {
                 high:ele[5],
                 low:ele[4],
                 open:ele[2],
-                volumefrom:0,
+                volumefrom:ele[6],
                 volumeto:ele[6]
             }
         });
