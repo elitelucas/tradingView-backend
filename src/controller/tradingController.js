@@ -23,7 +23,7 @@ module.exports = {
         params.range=req.query.from ? (new Date(req.query.from*1000)).getFullYear() : 2021;
         console.log(params);
         const result = await d.query(`
-        SELECT  * from "ADMIN".:table
+        SELECT  * from "ADMIN."||:table
         WHERE TRUNC(DATETIME)>=TO_DATE('01/JAN/' || :range,'dd/mon/yyyy')
         `        
         , {params});
