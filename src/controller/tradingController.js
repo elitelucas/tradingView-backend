@@ -22,8 +22,8 @@ module.exports = {
         console.log(table);
         let range=req.query.from ? (new Date(req.query.from*1000)).getFullYear() : 2021;
         const tmp_result = await d.query(`
-        SELECT  ID, DATETIME, OPEN, CLOSE, LOW, HIGH, VOLUMEN from "ADMIN"."${table}" ORDER BY DATETIME
-        WHERE TRUNC(DATETIME)>=TO_DATE('01/JAN/' || :range,'dd/mon/yyyy') 
+        SELECT  id, datetime, open, close, low, high, volumen from "ADMIN"."${table}" ORDER BY datetime
+        WHERE TRUNC(DATETIME)>=TO_DATE('01/JAN/' || :range,'dd/mon/yyyy');
         `        
         , {range:range});
         // const result = await d.query(`
