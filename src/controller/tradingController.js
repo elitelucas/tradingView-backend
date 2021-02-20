@@ -2,7 +2,6 @@ const Database = require('../database/Database.js');
 
 module.exports = { 
     async getData(req, res) {
-        console.log("controller");
         const d = await new Database();      
         let fsym=req.query.fsym ? req.query.fsym : "GBP";
         let tsym=req.query.tsym ? req.query.tsym : "USD";
@@ -15,25 +14,23 @@ module.exports = {
             resolution=(req.query.resolution/1440)+"D";
         else
             resolution=resolution+"M";
+        //generate the table name from the query of the request
         const table=fsym+tsym+"_"+resolution;
-        console.log(req.query.from);
-        console.log(new Date(req.query.from*1000));
-        console.log((new Date(req.query.from*1000)).getFullYear());
-        console.log(table);
-        let range=req.query.from ? (new Date(req.query.from*1000)).getFullYear() : 2021;
+        //set the range to read data
+        const date=new Date(req.query.from*1000);
+        let range=req.query.from ? `${date.getDate()}/${(date.getMonth()+1)}/${date.getFullYear()}` : "01/01/2021";
+        
+        //exceute the query
         const tmp_result = await d.query(`
         SELECT  id, datetime, open, close, low, high, volumen from "ADMIN"."${table}"
-        WHERE TRUNC(DATETIME)>=TO_DATE('01/JAN/' || :range,'dd/mon/yyyy')
+        WHERE TRUNC(DATETIME)>=TO_DATE(:range,'dd/mon/yyyy')
         ORDER BY DATETIME
         `        
-        , {range:range});
-        // const result = await d.query(`
-        // SELECT  * from "ADMIN"."GBPUSD_1M"
-        // WHERE TRUNC(DATETIME)>=TO_DATE('01/JAN/2021','dd/mon/yyyy')
-        // `        
-        // );
+        , {range:range});      
         
         const result={};
+
+        //data conversion for the trdaingView to read
         result.Data=tmp_result.rows.map(ele=>{
             return {
                 time:(new Date(ele[1])).getTime()/1000,
@@ -58,6 +55,8 @@ module.exports = {
         result.Type=tmp_result.rows.length;
         result.TimeFrom=result.Data[0].time;
         result.TimeTo=result.Data[result.Type-1].time;
+
+        
         res.send(result);        
     }    
 }
