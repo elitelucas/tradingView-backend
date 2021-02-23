@@ -6,5 +6,5 @@ app.use(express.json());
 app.use(cors());
 app.use('/api', routes);
 
-app.listen(5001);
+app.listen(3001);
 console.log("Backend is running");
