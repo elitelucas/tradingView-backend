@@ -19,13 +19,13 @@ module.exports = {
         //set the range to read data
         const date=new Date(req.query.toTs*1000);
         const now=Date.now();
-        let range=req.query.toTs ? `${date.getDate()}/${(date.getMonth()+1)}/${date.getFullYear()}` : `${now.getDate()}/${(now.getMonth()+1)}/${now.getFullYear()}`;
-        console.log(`
-        SELECT  id, datetime, open, close, low, high, volumen from "ADMIN"."${table}"
-        WHERE TRUNC(DATETIME)<=TO_DATE(${range},'dd/mon/yyyy')
-        ORDER BY DATETIME ASC
-        FETCH FIRST ${req.query.limit} ROWS ONLY
-        `)
+        let range=req.query.toTs ? `${date.getDate()}/${(date.getMonth()+1)<10 ? "0"+(date.getMonth()+1) : (date.getMonth()+1)}/${date.getFullYear()}` : `${now.getDate()}/${(now.getMonth()+1)}/${now.getFullYear()}`;
+        // console.log(`
+        // SELECT  id, datetime, open, close, low, high, volumen from "ADMIN"."${table}"
+        // WHERE TRUNC(DATETIME)<=TO_DATE(${range},'dd/mon/yyyy')
+        // ORDER BY DATETIME ASC
+        // FETCH FIRST ${req.query.limit} ROWS ONLY
+        // `)
         //exceute the query
         const tmp_result = await d.query(`
         SELECT  id, datetime, open, close, low, high, volumen from "ADMIN"."${table}"
