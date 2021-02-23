@@ -33,7 +33,6 @@ module.exports = {
         SELECT  id, datetime, open, close, low, high, volumen from "ADMIN"."${table}"
         WHERE TRUNC(DATETIME)>=TO_DATE(:fromRange,'dd/mm/yyyy') and TRUNC(DATETIME)<=TO_DATE(:toRange,'dd/mm/yyyy')
         ORDER BY DATETIME ASC
-        FETCH FIRST ${req.query.limit} ROWS ONLY
         `        
         , {fromRange, toRange});      
         
