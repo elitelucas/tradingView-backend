@@ -17,23 +17,19 @@ module.exports = {
         //generate the table name from the query of the request
         const table=fsym+tsym+"_"+resolution;
         //set the range to read data
-        const date=new Date(req.query.toTs*1000);
+        let date=new Date(req.query.toTs*1000);
         const now=Date.now();
-        let range=req.query.toTs ? `${date.getDate()}/${(date.getMonth()+1)<10 ? "0"+(date.getMonth()+1) : (date.getMonth()+1)}/${date.getFullYear()}` : `${now.getDate()}/${(now.getMonth()+1)}/${now.getFullYear()}`;
-        // console.log(`
-        // SELECT  id, datetime, open, close, low, high, volumen from "ADMIN"."${table}"
-        // WHERE TRUNC(DATETIME)<=TO_DATE(${range},'dd/mon/yyyy')
-        // ORDER BY DATETIME ASC
-        // FETCH FIRST ${req.query.limit} ROWS ONLY
-        // `)
+        let toRange=req.query.toTs ? `${date.getDate()}/${(date.getMonth()+1)<10 ? "0"+(date.getMonth()+1) : (date.getMonth()+1)}/${date.getFullYear()}` : `${now.getDate()}/${(now.getMonth()+1)<10 ? "0"+(now.getMonth()+1) : (now.getMonth()+1)}/${now.getFullYear()}`;
+        date=new Date(req.query.fromTs*1000);
+        let fromRange=req.query.fromTs ? `${date.getDate()}/${(date.getMonth()+1)<10 ? "0"+(date.getMonth()+1) : (date.getMonth()+1)}/${date.getFullYear()}` : `${now.getDate()}/${(now.getMonth()+1)<10 ? "0"+(now.getMonth()+1) : (now.getMonth()+1)}/${now.getFullYear()}`;
         //exceute the query
         const tmp_result = await d.query(`
         SELECT  id, datetime, open, close, low, high, volumen from "ADMIN"."${table}"
-        WHERE TRUNC(DATETIME)<=TO_DATE(:range,'dd/mm/yyyy')
+        WHERE TRUNC(DATETIME)>=TO_DATE(:fromRange,'dd/mm/yyyy') and TRUNC(DATETIME)<=TO_DATE(:toRange,'dd/mm/yyyy')
         ORDER BY DATETIME ASC
         FETCH FIRST ${req.query.limit} ROWS ONLY
         `        
-        , {range:range});      
+        , {fromRange, toRange});      
         
         const result={};
 
