@@ -29,7 +29,7 @@ module.exports = {
         //exceute the query
         const tmp_result = await d.query(`
         SELECT  id, datetime, open, close, low, high, volumen from "ADMIN"."${table}"
-        WHERE TRUNC(DATETIME)<=TO_DATE(:range,'dd/mon/yyyy')
+        WHERE TRUNC(DATETIME)<=TO_DATE(:range,'dd/mm/yyyy')
         ORDER BY DATETIME ASC
         FETCH FIRST ${req.query.limit} ROWS ONLY
         `        
