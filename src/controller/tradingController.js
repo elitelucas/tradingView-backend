@@ -62,8 +62,14 @@ module.exports = {
         result.HasWarning=false;
         result.Response="Success";
         result.Type=tmp_result.rows.length;
-        result.TimeFrom=result.Data[0].time;
-        result.TimeTo=result.Data[result.Type-1].time;
+        if(result.Data.length>0){
+            result.TimeFrom=result.Data[0].time;
+            result.TimeTo=result.Data[result.Type-1].time;
+        }else{
+            result.TimeFrom=req.query.fromTs;
+            result.TimeTo=req.query.toTs;
+        }
+        
 
         
         res.send(result);        
